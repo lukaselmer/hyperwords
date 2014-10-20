@@ -1,0 +1,40 @@
+from docopt import docopt
+from scipy.stats.stats import spearmanr
+
+from representation_factory import createRepresentation
+
+
+def main():
+    args = docopt("""
+    Usage:
+        ws_test.py [options] <representation> <representation_path> <task_path>
+    
+    Options:
+        --neg NUM    Number of negative samples; subtracts its log from PMI (only applicable to PPMI) [default: 1]
+        --w+c        Use ensemble of word and context vectors (not applicable to PPMI)
+        --eig NUM    Weighted exponent of the eigenvalue matrix (only applicable to SVD) [default: 0.5]
+    """)
+    
+    data = readTestSet(args['<task_path>'])
+    representation = createRepresentation(args)
+    correlation = evaluate(representation, data)
+    print args['<representation>'], args['<representation_path>'], '\t%0.3f' % correlation
+
+def readTestSet(path):
+    test = []
+    with open(path) as f:
+        for line in f:
+            x, y, sim = line.strip().lower().split()
+            test.append(((x, y), sim))
+    return test 
+
+def evaluate(representation, data):
+    results = []
+    for (x, y), sim in data:
+        results.append((representation.similarity(x, y), sim))
+    actual, expected = zip(*results)
+    return spearmanr(actual, expected)[0]
+
+
+if __name__ == '__main__':
+    main()
