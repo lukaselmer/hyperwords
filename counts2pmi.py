@@ -11,7 +11,7 @@ def main():
     
     args = docopt("""
     Usage:
-        pairs2pmi.py [options] <pair_counts> <output_path>
+        counts2pmi.py [options] <pair_counts> <output_path>
     
     Options:
         --cds NUM    Context distribution smoothing [default: 1.0 (no smoothing)]

@@ -1,0 +1,1 @@
+sort -T . $1 | uniq -c

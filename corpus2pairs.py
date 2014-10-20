@@ -8,7 +8,7 @@ from docopt import docopt
 def main():
     args = docopt("""
     Usage:
-        extract_pairs.py [options] <corpus>
+        corpus2pairs.py [options] <corpus>
     
     Options:
         --thr NUM    The minimal word count for being in the vocabulary [default: 100]

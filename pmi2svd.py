@@ -12,7 +12,7 @@ def main():
     
     args = docopt("""
     Usage:
-        svd.py [options] <pmi_path> <output_path>
+        pmi2svd.py [options] <pmi_path> <output_path>
     
     Options:
         --dim NUM    Dimensionality of eigenvectors [default: 500]
