@@ -1,27 +1,45 @@
 #!/bin/sh
 
 # Parse input params
-??????????????????????????????????
+PARAM_CHECK=`python corpus2svd_params.py`
+if [ $PARAM_CHECK == Usage* ]; then
+    echo $PARAM_CHECK;
+    exit 1
+fi
+PARAM_CHECK=${PARAM_CHECK//@/ }
+
+CORPUS=${PARAM_CHECK[0]}
+OUTPUT_DIR=${PARAM_CHECK[1]}
+CORPUS2PAIRS_OPTS=${PARAM_CHECK[2]}
+COUNTS2PMI_OPTS=${PARAM_CHECK[3]}
+PMI2SVD_OPTS=${PARAM_CHECK[4]}
+SVD2TEXT_OPTS=${PARAM_CHECK[5]}
+
 
 # Clean the corpus from non alpha-numeric symbols
 ./clean_corpus.sh $CORPUS > $CORPUS.clean
 
+
 # Create collection of word-context pairs
 mkdir $OUTPUT_DIR
-python corpus2pairs.py $OPTS ${CORPUS}.clean > $OUTPUT_DIR/pairs
+python corpus2pairs.py $CORPUS2PAIRS_OPTS $CORPUS.clean > $OUTPUT_DIR/pairs
 ./pairs2counts $OUTPUT_DIR/pairs > $OUTPUT_DIR/counts
 python counts2vocab.py $OUTPUT_DIR/counts
 
+
 # Calculate PMI matrices for each collection of pairs
-python pairs2pmi.py $OPTS $OUTPUT_DIR/counts $OUTPUT_DIR/pmi
+python counts2pmi.py $COUNTS2PMI_OPTS $OUTPUT_DIR/counts $OUTPUT_DIR/pmi
+
 
 # Create embeddings with SVD
-python pmi2svd.py $OPTS $OUTPUT_DIR/pmi $OUTPUT_DIR/svd
+python pmi2svd.py $PMI2SVD_OPTS $OUTPUT_DIR/pmi $OUTPUT_DIR/svd
 cp $OUTPUT_DIR/pmi.words.vocab $OUTPUT_DIR/svd.words.vocab
 cp $OUTPUT_DIR/pmi.contexts.vocab $OUTPUT_DIR/svd.contexts.vocab
 
+
 # Save the embeddings in the textual format 
-python svd2text.py $OPTS $OUTPUT_DIR/svd $OUTPUT_DIR/vectors.txt
+python svd2text.py $SVD2TEXT_OPTS $OUTPUT_DIR/svd $OUTPUT_DIR/vectors.txt
+
 
 # Remove temporary files
 rm $CORPUS.clean

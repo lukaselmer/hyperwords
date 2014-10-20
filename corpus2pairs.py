@@ -24,7 +24,7 @@ def main():
     win = int(args['--win'])
     pos = args['--pos']
     dyn = args['--dyn']
-    subsample = float(args['--float'])
+    subsample = float(args['--sub'])
     sub = subsample != 0
     oov = args['--oov']
     
