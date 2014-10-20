@@ -2,16 +2,13 @@ from docopt import docopt
 from scipy.sparse import dok_matrix, csr_matrix
 import numpy as np
 
-from logger import log_info, initialize_logger
-from matrix_serializer import save_matrix, save_vocabulary
+from matrix_serializer import save_matrix, save_vocabulary, load_count_vocabulary
 
 
 def main():
-    initialize_logger()
-    
     args = docopt("""
     Usage:
-        counts2pmi.py [options] <pair_counts> <output_path>
+        counts2pmi.py [options] <counts> <output_path>
     
     Options:
         --cds NUM    Context distribution smoothing [default: 1.0 (no smoothing)]
@@ -19,42 +16,29 @@ def main():
     
     counts_path = args['<pair_counts>']
     vectors_path = args['<output_path>']
-    words_vocab_path = vectors_path + '.words.vocab'
-    contexts_vocab_path = vectors_path + '.contexts.vocab'
-    
     cds = float(args['--cds'])
     
     counts, iw, ic = read_counts_matrix(counts_path)
-    log_info('LOADED COUNTS')
-    
+
     pmi = calc_pmi(counts, cds)
-    log_info('CALCULATED PMI')
-    
+
     save_matrix(vectors_path, pmi)
-    save_vocabulary(words_vocab_path, iw)
-    save_vocabulary(contexts_vocab_path, ic)
-    log_info('SAVED EVERYTHING')
+    save_vocabulary(vectors_path + '.words.vocab', iw)
+    save_vocabulary(vectors_path + '.contexts.vocab', ic)
 
 
 def read_counts_matrix(counts_path):
     """
     Reads the counts into a sparse matrix (CSR) from the count-word-context textual format.
     """
-    words = set()
-    contexts = set()
-    with open(counts_path) as f:
-        for line in f:
-            count, word, context = line.strip().split()
-            words.add(word)
-            contexts.add(context)
-    
-    words = list(words)
-    contexts = list(contexts)
+    words = load_count_vocabulary(counts_path + '.words.vocab')
+    contexts = load_count_vocabulary(counts_path + '.contexts.vocab')
+    words = list(words.keys())
+    contexts = list(contexts.keys())
     iw = sorted(words)
     ic = sorted(contexts)
     wi = dict([(w, i) for i, w in enumerate(iw)])
     ci = dict([(c, i) for i, c in enumerate(ic)])
-    log_info('LOADED VOCABS')
     
     counts = csr_matrix((len(wi), len(ci)), dtype=np.float32)
     tmp_counts = dok_matrix((len(wi), len(ci)), dtype=np.float32)

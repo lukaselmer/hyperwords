@@ -4,17 +4,16 @@
 ??????????????????????????????????
 
 # Clean the corpus from non alpha-numeric symbols
-./clean_corpus.sh $CORPUS > $CORPUS.filtered
-
-# Make a temporary directory
-mkdir $OUTPUT_DIR
+./clean_corpus.sh $CORPUS > $CORPUS.clean
 
 # Create collection of word-context pairs
+mkdir $OUTPUT_DIR
 python corpus2pairs.py $OPTS ${CORPUS}.clean > $OUTPUT_DIR/pairs
-sort -T $OUTPUT_DIR $OUTPUT_DIR/pairs | uniq -c > $OUTPUT_DIR/pair_counts
+./pairs2counts $OUTPUT_DIR/pairs > $OUTPUT_DIR/counts
+python counts2vocab.py $OUTPUT_DIR/counts
 
 # Calculate PMI matrices for each collection of pairs
-python pairs2pmi.py $OPTS $OUTPUT_DIR/pair_counts $OUTPUT_DIR/pmi
+python pairs2pmi.py $OPTS $OUTPUT_DIR/counts $OUTPUT_DIR/pmi
 
 # Create embeddings with SVD
 python pmi2svd.py $OPTS $OUTPUT_DIR/pmi $OUTPUT_DIR/svd
@@ -26,6 +25,7 @@ python svd2text.py $OPTS $OUTPUT_DIR/svd $OUTPUT_DIR/vectors.txt
 
 # Remove temporary files
 rm $CORPUS.clean
-rm $OUTPUT_DIR/pair*
+rm $OUTPUT_DIR/pairs
+rm $OUTPUT_DIR/counts*
 rm $OUTPUT_DIR/pmi*
 rm $OUTPUT_DIR/svd*
