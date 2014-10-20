@@ -1,14 +1,15 @@
-from docopt import docopt
 from sparsesvd import sparsesvd
 
-from explicit import PositiveExplicit
-from logger import initializeLogger, logInfo
-from matrix_serializer import saveVocabulary
+from docopt import docopt
 import numpy as np
+
+from explicit import PositiveExplicit
+from logger import initialize_logger, log_info
+from matrix_serializer import save_vocabulary
 
 
 def main():
-    initializeLogger()
+    initialize_logger()
     
     args = docopt("""
     Usage:
@@ -25,17 +26,17 @@ def main():
     neg = args['--neg']
     
     explicit = PositiveExplicit(pmi_path, normalize=False, neg=neg)
-    logInfo('LOADED PPMI')
+    log_info('LOADED PPMI')
     
     ut, s, vt = sparsesvd(explicit.m.tocsc(), dim)
-    logInfo('DONE SVD')
+    log_info('DONE SVD')
     
-    np.save(output_path+'.d'+str(dim)+'.n'+str(neg)+'.ut.npy', ut)
-    np.save(output_path+'.d'+str(dim)+'.n'+str(neg)+'.s.npy', s)
-    np.save(output_path+'.d'+str(dim)+'.n'+str(neg)+'.vt.npy', vt)
-    saveVocabulary(output_path+'.d'+str(dim)+'.n'+str(neg)+'.words.vocab', explicit.iw)
-    saveVocabulary(output_path+'.d'+str(dim)+'.n'+str(neg)+'.contexts.vocab', explicit.ic)
-    logInfo('SAVED MATRICES')
+    np.save(output_path + '.d' + str(dim) + '.n' + str(neg) + '.ut.npy', ut)
+    np.save(output_path + '.d' + str(dim) + '.n' + str(neg) + '.s.npy', s)
+    np.save(output_path + '.d' + str(dim) + '.n' + str(neg) + '.vt.npy', vt)
+    save_vocabulary(output_path + '.d' + str(dim) + '.n' + str(neg) + '.words.vocab', explicit.iw)
+    save_vocabulary(output_path + '.d' + str(dim) + '.n' + str(neg) + '.contexts.vocab', explicit.ic)
+    log_info('SAVED MATRICES')
 
 
 if __name__ == '__main__':

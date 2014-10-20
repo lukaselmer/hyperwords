@@ -1,7 +1,7 @@
 from docopt import docopt
 from scipy.stats.stats import spearmanr
 
-from representation_factory import createRepresentation
+from representation_factory import create_representation
 
 
 def main():
@@ -15,18 +15,20 @@ def main():
         --eig NUM    Weighted exponent of the eigenvalue matrix (only applicable to SVD) [default: 0.5]
     """)
     
-    data = readTestSet(args['<task_path>'])
-    representation = createRepresentation(args)
+    data = read_test_set(args['<task_path>'])
+    representation = create_representation(args)
     correlation = evaluate(representation, data)
     print args['<representation>'], args['<representation_path>'], '\t%0.3f' % correlation
 
-def readTestSet(path):
+
+def read_test_set(path):
     test = []
     with open(path) as f:
         for line in f:
             x, y, sim = line.strip().lower().split()
             test.append(((x, y), sim))
     return test 
+
 
 def evaluate(representation, data):
     results = []

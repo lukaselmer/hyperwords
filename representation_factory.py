@@ -2,7 +2,7 @@ from embedding import SVDEmbedding, EnsembleEmbedding, Embedding
 from explicit import PositiveExplicit
 
 
-def createRepresentation(args):
+def create_representation(args):
     rep_type = args['<representation>']
     path = args['<representation_path>']
     neg = int(args['--neg'])
@@ -23,6 +23,6 @@ def createRepresentation(args):
         
     else:
         if w_c:
-            return EnsembleEmbedding(Embedding(path+'.words', False), Embedding(path+'.contexts', False), True)
+            return EnsembleEmbedding(Embedding(path + '.words', False), Embedding(path + '.contexts', False), True)
         else:
-            return Embedding(path+'.words', True)
+            return Embedding(path + '.words', True)

@@ -1,9 +1,9 @@
 from __builtin__ import sorted
 
 from docopt import docopt
-
 import numpy as np
-from representation_factory import createRepresentation
+
+from representation_factory import create_representation
 
 
 def main():
@@ -17,13 +17,14 @@ def main():
         --eig NUM    Weighted exponent of the eigenvalue matrix (only applicable to SVD) [default: 0.5]
     """)
     
-    data = readTestSet(args['<task_path>'])
-    xi, ix = getVocab(data)
-    representation = createRepresentation(args)
+    data = read_test_set(args['<task_path>'])
+    xi, ix = get_vocab(data)
+    representation = create_representation(args)
     accuracy_add, accuracy_mul = evaluate(representation, data, xi, ix)
     print args['<representation>'], args['<representation_path>'], '\t%0.3f' % accuracy_add, '\t%0.3f' % accuracy_mul
 
-def readTestSet(path):
+
+def read_test_set(path):
     test = []
     with open(path) as f:
         for line in f:
@@ -31,15 +32,17 @@ def readTestSet(path):
             test.append(analogy)
     return test 
 
-def getVocab(data):
+
+def get_vocab(data):
     vocab = set()
     for analogy in data:
         vocab.update(analogy)
     vocab = sorted(vocab)
     return dict([(a, i) for i, a in enumerate(vocab)]), vocab
 
+
 def evaluate(representation, data, xi, ix):
-    sims = prepareSimilarities(representation, ix)
+    sims = prepare_similarities(representation, ix)
     correct_add = 0.0
     correct_mul = 0.0
     for a, a_, b, b_ in data:
@@ -50,7 +53,8 @@ def evaluate(representation, data, xi, ix):
             correct_mul += 1
     return correct_add/len(data), correct_mul/len(data)
 
-def prepareSimilarities(representation, vocab):
+
+def prepare_similarities(representation, vocab):
     vocab_representation = representation.m[[representation.wi[w] if w in representation.wi else 0 for w in vocab]]
     sims = vocab_representation.dot(representation.m.T)
     
@@ -70,21 +74,28 @@ def prepareSimilarities(representation, vocab):
         sims = (sims+1)/2
     return sims
 
+
 def guess(representation, sims, xi, a, a_, b):
     sa = sims[xi[a]]
     sa_ = sims[xi[a_]]
     sb = sims[xi[b]]
     
     add_sim = -sa+sa_+sb
-    if a in representation.wi:  add_sim[representation.wi[a]] = 0
-    if a_ in representation.wi: add_sim[representation.wi[a_]] = 0
-    if b in representation.wi:  add_sim[representation.wi[b]] = 0
+    if a in representation.wi:
+        add_sim[representation.wi[a]] = 0
+    if a_ in representation.wi:
+        add_sim[representation.wi[a_]] = 0
+    if b in representation.wi:
+        add_sim[representation.wi[b]] = 0
     b_add = representation.iw[np.nanargmax(add_sim)]
     
     mul_sim = sa_*sb*np.reciprocal(sa+0.01)
-    if a in representation.wi:  mul_sim[representation.wi[a]] = 0
-    if a_ in representation.wi: mul_sim[representation.wi[a_]] = 0
-    if b in representation.wi:  mul_sim[representation.wi[b]] = 0
+    if a in representation.wi:
+        mul_sim[representation.wi[a]] = 0
+    if a_ in representation.wi:
+        mul_sim[representation.wi[a_]] = 0
+    if b in representation.wi:
+        mul_sim[representation.wi[b]] = 0
     b_mul = representation.iw[np.nanargmax(mul_sim)]
     
     return b_add, b_mul

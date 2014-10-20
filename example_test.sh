@@ -1,3 +1,5 @@
+#!/bin/sh
+
 ???? Download the latest wikipedia corpus.
 
 ???? Download and MAKE word2vecf

@@ -12,7 +12,7 @@ def main():
     text_path = args['<text_vectors>']
     output_path = args['<output_path>']
     
-    matrix = readVectors(text_path)
+    matrix = read_vectors(text_path)
     iw = sorted(matrix.keys())
     
     new_matrix = np.zeros(shape=(len(iw), len(matrix[iw[0]])), dtype=np.float32)
@@ -20,9 +20,10 @@ def main():
         if word in matrix:
             new_matrix[i, :] = matrix[word]
     
-    np.save(output_path+'.npy', new_matrix)
+    np.save(output_path + '.npy', new_matrix)
 
-def readVectors(path):
+
+def read_vectors(path):
     vectors = {}
     with open(path) as input_f:
         i = -1

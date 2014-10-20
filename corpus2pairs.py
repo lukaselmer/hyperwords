@@ -28,25 +28,25 @@ def main():
     sub = subsample != 0
     oov = args['--oov']
     
-    vocab = readVocab(corpus_file, thr)
+    vocab = read_vocab(corpus_file, thr)
     corpus_size = sum(vocab.values())
     
     subsample *= corpus_size
-    subsampler = dict([(word, 1-sqrt(subsample/count)) for word, count in vocab.items() if count > subsample])
+    subsampler = dict([(word, 1 - sqrt(subsample / count)) for word, count in vocab.items() if count > subsample])
     
     rnd = Random(17)
     with open(corpus_file) as f: 
         for line in f:
             
-            toks = [t if t in vocab else None for t in line.strip().split()]
+            tokens = [t if t in vocab else None for t in line.strip().split()]
             if sub:
-                toks = [t if t not in subsampler or rnd.random() > subsampler[t] else None for t in toks]
+                tokens = [t if t not in subsampler or rnd.random() > subsampler[t] else None for t in tokens]
             if oov:
-                toks = [t for t in toks if t is not None]
+                tokens = [t for t in tokens if t is not None]
             
-            len_toks = len(toks)
+            len_tokens = len(tokens)
             
-            for i, tok in enumerate(toks):
+            for i, tok in enumerate(tokens):
                 if tok is not None:
                     if dyn:
                         dynamic_window = rnd.randint(1, win)
@@ -56,17 +56,18 @@ def main():
                     if start < 0:
                         start = 0
                     end = i + dynamic_window + 1
-                    if end > len_toks:
-                        end = len_toks
+                    if end > len_tokens:
+                        end = len_tokens
                     
                     if pos:
-                        output = '\n'.join([row for row in [tok + ' ' + toks[j] + '_'+str(j-i) for j in xrange(start, end) if j != i and toks[j] is not None] if len(row) > 0]).strip()
+                        output = '\n'.join([row for row in [tok + ' ' + tokens[j] + '_' + str(j - i) for j in xrange(start, end) if j != i and tokens[j] is not None] if len(row) > 0]).strip()
                     else:
-                        output = '\n'.join([row for row in [tok + ' ' + toks[j] for j in xrange(start, end) if j != i and toks[j] is not None] if len(row) > 0]).strip()
+                        output = '\n'.join([row for row in [tok + ' ' + tokens[j] for j in xrange(start, end) if j != i and tokens[j] is not None] if len(row) > 0]).strip()
                     if len(output) > 0:
                         print output
 
-def readVocab(corpus_file, thr):
+
+def read_vocab(corpus_file, thr):
     vocab = Counter()
     with open(corpus_file) as f:
         for line in f:

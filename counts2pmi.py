@@ -1,13 +1,13 @@
 from docopt import docopt
 from scipy.sparse import dok_matrix, csr_matrix
-
-from logger import logInfo, initializeLogger
-from matrix_serializer import saveMatrix, saveVocabulary
 import numpy as np
+
+from logger import log_info, initialize_logger
+from matrix_serializer import save_matrix, save_vocabulary
 
 
 def main():
-    initializeLogger()
+    initialize_logger()
     
     args = docopt("""
     Usage:
@@ -19,32 +19,32 @@ def main():
     
     counts_path = args['<pair_counts>']
     vectors_path = args['<output_path>']
-    words_vocab_path = vectors_path+'.words.vocab'
-    contexts_vocab_path = vectors_path+'.contexts.vocab'
+    words_vocab_path = vectors_path + '.words.vocab'
+    contexts_vocab_path = vectors_path + '.contexts.vocab'
     
     cds = float(args['--cds'])
     
-    counts, iw, ic = readCountsMatrix(counts_path)
-    logInfo('LOADED COUNTS')
+    counts, iw, ic = read_counts_matrix(counts_path)
+    log_info('LOADED COUNTS')
     
-    pmi = calcPMI(counts, cds)
-    logInfo('CALCULATED PMI')
+    pmi = calc_pmi(counts, cds)
+    log_info('CALCULATED PMI')
     
-    saveMatrix(vectors_path, pmi)
-    saveVocabulary(words_vocab_path, iw)
-    saveVocabulary(contexts_vocab_path, ic)
-    logInfo('SAVED EVERYTHING')
+    save_matrix(vectors_path, pmi)
+    save_vocabulary(words_vocab_path, iw)
+    save_vocabulary(contexts_vocab_path, ic)
+    log_info('SAVED EVERYTHING')
 
-def readCountsMatrix(counts_path):
-    '''
-    Reads the counts into a sparse matrix (CSR) from the count-word-context textual format. 
-    '''
+
+def read_counts_matrix(counts_path):
+    """
+    Reads the counts into a sparse matrix (CSR) from the count-word-context textual format.
+    """
     words = set()
     contexts = set()
     with open(counts_path) as f:
         for line in f:
             count, word, context = line.strip().split()
-            count = int(count)
             words.add(word)
             contexts.add(context)
     
@@ -54,7 +54,7 @@ def readCountsMatrix(counts_path):
     ic = sorted(contexts)
     wi = dict([(w, i) for i, w in enumerate(iw)])
     ci = dict([(c, i) for i, c in enumerate(ic)])
-    logInfo('LOADED VOCABS')
+    log_info('LOADED VOCABS')
     
     counts = csr_matrix((len(wi), len(ci)), dtype=np.float32)
     tmp_counts = dok_matrix((len(wi), len(ci)), dtype=np.float32)
@@ -73,30 +73,33 @@ def readCountsMatrix(counts_path):
     
     return counts, iw, ic
 
-def calcPMI(counts, cds):
-    '''
+
+def calc_pmi(counts, cds):
+    """
     Calculates e^PMI; PMI without the log().
-    '''
+    """
     sum_w = np.array(counts.sum(axis=1))[:, 0]
     sum_c = np.array(counts.sum(axis=0))[0, :]
     if cds != 1:
-        sum_c = sum_c**cds
+        sum_c = sum_c ** cds
     sum_total = sum_c.sum()
     sum_w = np.reciprocal(sum_w)
     sum_c = np.reciprocal(sum_c)
     
     pmi = csr_matrix(counts)
-    pmi = multiplyByRows(pmi, sum_w)
-    pmi = multiplyByColumns(pmi, sum_c)
+    pmi = multiply_by_rows(pmi, sum_w)
+    pmi = multiply_by_columns(pmi, sum_c)
     pmi = pmi * sum_total
     return pmi
 
-def multiplyByRows(matrix, row_coefs):
+
+def multiply_by_rows(matrix, row_coefs):
     normalizer = dok_matrix((len(row_coefs), len(row_coefs)))
     normalizer.setdiag(row_coefs)
     return normalizer.tocsr().dot(matrix)
 
-def multiplyByColumns(matrix, col_coefs):
+
+def multiply_by_columns(matrix, col_coefs):
     normalizer = dok_matrix((len(col_coefs), len(col_coefs)))
     normalizer.setdiag(col_coefs)
     return matrix.dot(normalizer.tocsr())
