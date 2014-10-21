@@ -30,7 +30,7 @@ SVD2TEXT_OPTS=${PARAM_CHECK[5]}
 # Create collection of word-context pairs
 mkdir $OUTPUT_DIR
 python corpus2pairs.py $CORPUS2PAIRS_OPTS $CORPUS.clean > $OUTPUT_DIR/pairs
-./pairs2count.sh $OUTPUT_DIR/pairs > $OUTPUT_DIR/counts
+./pairs2counts.sh $OUTPUT_DIR/pairs > $OUTPUT_DIR/counts
 python counts2vocab.py $OUTPUT_DIR/counts
 
 
