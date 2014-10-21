@@ -57,15 +57,15 @@ class SVDEmbedding(Embedding):
             self.wi, self.iw = load_vocabulary(path + '.words.vocab')
         s = np.load(path + '.s.npy')
         
-        self.dim = self.m.shape[1]
-        
         if eig == 0.0:
             self.m = ut.T
         elif eig == 1.0:
             self.m = s * ut.T
         else:
             self.m = np.power(s, eig) * ut.T
-        
+
+        self.dim = self.m.shape[1]
+
         if normalize:
             self.normalize()
 
@@ -89,7 +89,7 @@ class EnsembleEmbedding(Embedding):
         only_vocab2 = list(vocab2 - vocab1)
         self.iw = joint_vocab + only_vocab1 + only_vocab2
         self.wi = dict([(w, i) for i, w in enumerate(self.iw)])
-        
+
         m_joint = emb1.m[[emb1.wi[w] for w in joint_vocab]] + emb2.m[[emb2.wi[w] for w in joint_vocab]]
         m_only1 = emb1.m[[emb1.wi[w] for w in only_vocab1]]
         m_only2 = emb2.m[[emb2.wi[w] for w in only_vocab2]]

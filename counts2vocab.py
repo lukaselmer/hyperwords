@@ -18,6 +18,7 @@ def main():
     with open(counts_path) as f:
         for line in f:
             count, word, context = line.strip().split()
+            count = int(count)
             words[word] += count
             contexts[context] += count
 

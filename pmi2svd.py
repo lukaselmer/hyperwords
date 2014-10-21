@@ -19,18 +19,18 @@ def main():
     
     pmi_path = args['<pmi_path>']
     output_path = args['<output_path>']
-    dim = args['--dim']
-    neg = args['--neg']
+    dim = int(args['--dim'])
+    neg = int(args['--neg'])
     
     explicit = PositiveExplicit(pmi_path, normalize=False, neg=neg)
 
     ut, s, vt = sparsesvd(explicit.m.tocsc(), dim)
 
-    np.save(output_path + '.d' + str(dim) + '.n' + str(neg) + '.ut.npy', ut)
-    np.save(output_path + '.d' + str(dim) + '.n' + str(neg) + '.s.npy', s)
-    np.save(output_path + '.d' + str(dim) + '.n' + str(neg) + '.vt.npy', vt)
-    save_vocabulary(output_path + '.d' + str(dim) + '.n' + str(neg) + '.words.vocab', explicit.iw)
-    save_vocabulary(output_path + '.d' + str(dim) + '.n' + str(neg) + '.contexts.vocab', explicit.ic)
+    np.save(output_path + '.ut.npy', ut)
+    np.save(output_path + '.s.npy', s)
+    np.save(output_path + '.vt.npy', vt)
+    save_vocabulary(output_path + '.words.vocab', explicit.iw)
+    save_vocabulary(output_path + '.contexts.vocab', explicit.ic)
 
 
 if __name__ == '__main__':

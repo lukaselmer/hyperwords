@@ -14,7 +14,7 @@ def main():
         --cds NUM    Context distribution smoothing [default: 1.0 (no smoothing)]
     """)
     
-    counts_path = args['<pair_counts>']
+    counts_path = args['<counts>']
     vectors_path = args['<output_path>']
     cds = float(args['--cds'])
     

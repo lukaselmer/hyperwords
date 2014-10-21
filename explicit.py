@@ -41,21 +41,21 @@ class Explicit:
         """
         Assumes the vectors have been normalized.
         """
-        return self.represent(w1).dot(self.represent(w2))[0, 0]
+        return self.represent(w1).dot(self.represent(w2).T)[0, 0]
     
     def closest_contexts(self, w, n=10):
         """
         Assumes the vectors have been normalized.
         """
         scores = self.represent(w)
-        return heapq.nlargest(n, zip(scores, self.ic))
+        return heapq.nlargest(n, zip(scores.data, [self.ic[i] for i in scores.indices]))
     
     def closest(self, w, n=10):
         """
         Assumes the vectors have been normalized.
         """
-        scores = self.m.dot(self.represent(w))
-        return heapq.nlargest(n, zip(scores, self.iw))
+        scores = self.m.dot(self.represent(w).T).T.tocsr()
+        return heapq.nlargest(n, zip(scores.data, [self.iw[i] for i in scores.indices]))
 
 
 class PositiveExplicit(Explicit):

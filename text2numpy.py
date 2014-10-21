@@ -1,12 +1,13 @@
 from docopt import docopt
 
 import numpy as np
+from matrix_serializer import save_vocabulary
 
 
 def main():
     args = docopt("""
     Usage:
-        text2numpy.py <text_path> <output_path>
+        text2numpy.py <text_vectors> <output_path>
     """)
     
     text_path = args['<text_vectors>']
@@ -21,15 +22,16 @@ def main():
             new_matrix[i, :] = matrix[word]
     
     np.save(output_path + '.npy', new_matrix)
+    save_vocabulary(output_path + '.vocab', iw)
 
 
 def read_vectors(path):
     vectors = {}
-    with open(path) as input_f:
-        i = -1
-        for line in input_f.readlines():
-            i += 1
-            if i <= 1:
+    with open(path) as f:
+        first_line = True
+        for line in f:
+            if first_line:
+                first_line = False
                 continue
             tokens = line.strip().split(' ')
             vectors[tokens[0]] = np.asarray([float(x) for x in tokens[1:]])
