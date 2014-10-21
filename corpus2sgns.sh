@@ -1,5 +1,10 @@
 #!/bin/sh
 
+# Download and install word2vecf
+if [ ! -f word2vecf ]; then
+    ./install_word2vecf.sh
+fi
+
 # Parse input params
 PARAM_CHECK=$(python corpus2sgns_params.py $@ 2>&1)
 if [[ $PARAM_CHECK == *Usage:* ]]; then
