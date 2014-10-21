@@ -14,7 +14,7 @@ def main():
         --dyn        Dynamic context windows
         --sub NUM    Subsampling threshold [default: 0]
         --oov        Remove out-of-vocabulary and subsampled placeholders
-        --cds NUM    Context distribution smoothing [default: 1.0 (no smoothing)]
+        --cds NUM    Context distribution smoothing [default: 1.0]
         --dim NUM    Dimensionality of eigenvectors [default: 500]
         --neg NUM    Number of negative samples; subtracts its log from PMI [default: 1]
         --w+c        Use ensemble of word and context vectors (not applicable to PPMI)
@@ -47,7 +47,7 @@ def main():
         svd2text_opts.append('--w+c')
     svd2text_opts.append('--eig ' + args['--eig'])
 
-    print ' @ '.join([
+    print '@'.join([
         corpus,
         output_dir,
         ' '.join(corpus2pairs_opts),

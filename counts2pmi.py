@@ -11,7 +11,7 @@ def main():
         counts2pmi.py [options] <counts> <output_path>
     
     Options:
-        --cds NUM    Context distribution smoothing [default: 1.0 (no smoothing)]
+        --cds NUM    Context distribution smoothing [default: 1.0]
     """)
     
     counts_path = args['<counts>']
