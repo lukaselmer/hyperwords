@@ -1,0 +1,76 @@
+hyperwords: Hyperparameter-Enabled Word Representations
+=======================================================
+
+hyperwords is a collection of scripts and programs for creating word representations, designed to facilitate academic
+research and prototyping of word representations. hyperwords allows you to tune many hyperparameters that are pre-set or
+ignored in other word representation packages.
+
+hyperwords is free and open software. If you use hyperwords in scientific publication, we would appreciate citations:
+"<NAME>" Omer Levy, Yoav Goldberg, and Ido Dagan. <JOURNAL> 2014/5.
+
+
+Quick-Start
+===========
+1) Download the latest version from BitBucket, unzip, and make sure all scripts have running permissions (chmod 755 *.sh).
+2) Download a text corpus of your choice.
+3.A) To create word vectors with SVD over PPMI, use: corpus2svd.sh
+3.B) To create word vectors with SGNS, use: corpus2sgns.sh
+4) The vectors should be available in textual format under <output_path>/vectors.txt
+
+
+Pipeline
+========
+The following figure shows the hyperwords' pipeline:
+
+DATA:          raw corpus  =>  corpus  =>  pairs  =>  counts  =>  vocab
+TRADITIONAL:   counts + vocab  =>  pmi  =>  svd
+EMBEDDINGS:    pairs  + vocab  =>  sgns
+
+* raw corpus  =>  corpus
+- clean_corpus.sh
+- Eliminates non-alphanumeric tokens from the original corpus.
+
+* corpus  =>  pairs
+- corpus2pairs.py
+- Extracts a collection of word-context pairs from the corpus.
+
+* pairs  =>  counts
+- pairs2counts.sh
+- Aggregates identical word-context pairs.
+
+* counts  =>  vocab
+- counts2vocab.py
+- Creates vocabularies with the words' and contexts' unigram distributions.
+
+* counts + vocab  =>  pmi
+- counts2pmi.py
+- Creates a PMI matrix (scipy.sparse.csr_matrix) from the counts.
+
+* pmi  =>  svd
+- pmi2svd.py
+- Factorizes the PMI matrix using SVD. Saves the result as three dense numpy matrices.
+
+* pairs  + vocab  =>  sgns
+- word2vecf
+- An external program for creating embeddings with SGNS. For more information, see:
+"Dependency-Based Word Embeddings". Omer Levy and Yoav Goldberg. ACL 2014.
+
+An example pipeline is demonstrated in: example_test.sh
+
+
+Evaluation
+==========
+hyperwords also allows easy evaluation of word representations on two tasks: word similarity and analogies.
+
+* Word Similarity
+- ws_test.py
+- Compares how a representation ranks pairs of related words by similarity versus human ranking.
+- 5 readily-available datasets
+
+* Analogies
+- analogy_test.py
+- Solves analogy questions, such as: "man is to woman as king is to...?" (answer: queen).
+- 2 readily-available datasets
+- Shows results of two analogy recovery methods: 3CosAdd and 3CosMul. For more information, see:
+"Linguistic Regularities in Sparse and Explicit Word Representations". Omer Levy and Yoav Goldberg. CoNLL 2014.
+
