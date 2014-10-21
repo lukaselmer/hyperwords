@@ -22,6 +22,7 @@ COUNTS2PMI_OPTS=${PARAM_CHECK[3]}
 PMI2SVD_OPTS=${PARAM_CHECK[4]}
 SVD2TEXT_OPTS=${PARAM_CHECK[5]}
 
+
 # Clean the corpus from non alpha-numeric symbols
 ./clean_corpus.sh $CORPUS > $CORPUS.clean
 
@@ -29,7 +30,7 @@ SVD2TEXT_OPTS=${PARAM_CHECK[5]}
 # Create collection of word-context pairs
 mkdir $OUTPUT_DIR
 python corpus2pairs.py $CORPUS2PAIRS_OPTS $CORPUS.clean > $OUTPUT_DIR/pairs
-./pairs2counts.sh $OUTPUT_DIR/pairs > $OUTPUT_DIR/counts
+./pairs2count.sh $OUTPUT_DIR/pairs > $OUTPUT_DIR/counts
 python counts2vocab.py $OUTPUT_DIR/counts
 
 

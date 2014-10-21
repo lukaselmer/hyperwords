@@ -9,8 +9,8 @@ def main():
         svd2text.py [options] <svd_path> <output_path>
     
     Options:
-        --w+c        Use ensemble of word and context vectors (not applicable to PPMI)
-        --eig NUM    Weighted exponent of the eigenvalue matrix (only applicable to SVD) [default: 0.5]
+        --w+c        Use ensemble of word and context vectors
+        --eig NUM    Weighted exponent of the eigenvalue matrix [default: 0.5]
     """)
     
     svd_path = args['<svd_path>']
