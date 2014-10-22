@@ -1,5 +1,4 @@
-hyperwords: Hyperparameter-Enabled Word Representations
-=======================================================
+# hyperwords: Hyperparameter-Enabled Word Representations #
 
 hyperwords is a collection of scripts and programs for creating word representations, designed to facilitate academic
 research and prototyping of word representations. hyperwords allows you to tune many hyperparameters that are pre-set or
@@ -9,8 +8,7 @@ hyperwords is free and open software. If you use hyperwords in scientific public
 "<NAME>" Omer Levy, Yoav Goldberg, and Ido Dagan. <JOURNAL> 2014/5.
 
 
-Quick-Start
------------
+## Quick-Start ##
 1. Download the latest version from BitBucket, unzip, and make sure all scripts have running permissions (chmod 755 *.sh).
 2. Download a text corpus of your choice.
 3. To create word vectors...
@@ -19,8 +17,7 @@ Quick-Start
 4. The vectors should be available in textual format under <output_path>/vectors.txt
 
 
-Pipeline
---------
+##Pipeline##
 The following figure shows the hyperwords' pipeline:
 
 DATA:          raw corpus  =>  corpus  =>  pairs  =>  counts  =>  vocab  
@@ -59,8 +56,7 @@ EMBEDDINGS:    pairs  + vocab  =>  sgns
 An example pipeline is demonstrated in: example_test.sh
 
 
-Evaluation
-----------
+##Evaluation##
 hyperwords also allows easy evaluation of word representations on two tasks: word similarity and analogies.
 
 **Word Similarity**  
