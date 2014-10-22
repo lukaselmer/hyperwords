@@ -20,9 +20,9 @@ hyperwords is free and open software. If you use hyperwords in scientific public
 ##Pipeline##
 The following figure shows the hyperwords' pipeline:
 
-DATA:          raw corpus  =>  corpus  =>  pairs  =>  counts  =>  vocab  
-TRADITIONAL:   counts + vocab  =>  pmi  =>  svd  
-EMBEDDINGS:    pairs  + vocab  =>  sgns  
+**DATA:**  raw corpus  =>  corpus  =>  pairs  =>  counts  =>  vocab  
+**TRADITIONAL:**  counts + vocab  =>  pmi  =>  svd  
+**EMBEDDINGS:**  pairs  + vocab  =>  sgns  
 
 **raw corpus  =>  corpus**  
 - *clean_corpus.sh*  
