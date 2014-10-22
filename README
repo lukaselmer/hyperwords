@@ -5,7 +5,7 @@ research and prototyping of word representations. hyperwords allows you to tune 
 ignored in other word representation packages.
 
 hyperwords is free and open software. If you use hyperwords in scientific publication, we would appreciate citations:  
-"<NAME>" Omer Levy, Yoav Goldberg, and Ido Dagan. <JOURNAL> 2014/5.
+**"<NAME>" Omer Levy, Yoav Goldberg, and Ido Dagan. <JOURNAL> 2014/5.**
 
 
 ## Quick-Start ##
@@ -51,7 +51,7 @@ The following figure shows the hyperwords' pipeline:
 **pairs  + vocab  =>  sgns**  
 - *word2vecf*  
 - An external program for creating embeddings with SGNS. For more information, see:  
-"Dependency-Based Word Embeddings". Omer Levy and Yoav Goldberg. ACL 2014.
+**"Dependency-Based Word Embeddings". Omer Levy and Yoav Goldberg. ACL 2014.**
 
 An example pipeline is demonstrated in: example_test.sh
 
@@ -69,4 +69,4 @@ hyperwords also allows easy evaluation of word representations on two tasks: wor
 - Solves analogy questions, such as: "man is to woman as king is to...?" (answer: queen).  
 - 2 readily-available datasets  
 - Shows results of two analogy recovery methods: 3CosAdd and 3CosMul. For more information, see:  
-"Linguistic Regularities in Sparse and Explicit Word Representations". Omer Levy and Yoav Goldberg. CoNLL 2014.
+**"Linguistic Regularities in Sparse and Explicit Word Representations". Omer Levy and Yoav Goldberg. CoNLL 2014.**
