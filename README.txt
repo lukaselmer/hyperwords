@@ -10,12 +10,12 @@ hyperwords is free and open software. If you use hyperwords in scientific public
 
 
 Quick-Start
-===========
-1) Download the latest version from BitBucket, unzip, and make sure all scripts have running permissions (chmod 755 *.sh).
-2) Download a text corpus of your choice.
-3.A) To create word vectors with SVD over PPMI, use: corpus2svd.sh
-3.B) To create word vectors with SGNS, use: corpus2sgns.sh
-4) The vectors should be available in textual format under <output_path>/vectors.txt
+-----------
+1. Download the latest version from BitBucket, unzip, and make sure all scripts have running permissions (chmod 755 *.sh).
+2. Download a text corpus of your choice.
+3.A. To create word vectors with SVD over PPMI, use: corpus2svd.sh
+3.B. To create word vectors with SGNS, use: corpus2sgns.sh
+4. The vectors should be available in textual format under <output_path>/vectors.txt
 
 
 Pipeline
@@ -73,4 +73,3 @@ hyperwords also allows easy evaluation of word representations on two tasks: wor
 - 2 readily-available datasets
 - Shows results of two analogy recovery methods: 3CosAdd and 3CosMul. For more information, see:
 "Linguistic Regularities in Sparse and Explicit Word Representations". Omer Levy and Yoav Goldberg. CoNLL 2014.
-
