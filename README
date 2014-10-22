@@ -24,7 +24,9 @@ Pipeline
 The following figure shows the hyperwords' pipeline:
 
 DATA:          raw corpus  =>  corpus  =>  pairs  =>  counts  =>  vocab
+
 TRADITIONAL:   counts + vocab  =>  pmi  =>  svd
+
 EMBEDDINGS:    pairs  + vocab  =>  sgns
 
 * raw corpus  =>  corpus
