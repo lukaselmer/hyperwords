@@ -14,8 +14,8 @@ Quick-Start
 1. Download the latest version from BitBucket, unzip, and make sure all scripts have running permissions (chmod 755 *.sh).
 2. Download a text corpus of your choice.
 3. To create word vectors...
-    * ...with SVD over PPMI, use: corpus2svd.sh
-    * ...with SGNS, use: corpus2sgns.sh
+    * ...with SVD over PPMI, use: **corpus2svd.sh**
+    * ...with SGNS, use: **corpus2sgns.sh**
 4. The vectors should be available in textual format under <output_path>/vectors.txt
 
 
