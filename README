@@ -65,7 +65,7 @@ The following figure shows the hyperwords' pipeline:
 - An external program for creating embeddings with SGNS. For more information, see:  
 **"Dependency-Based Word Embeddings". Omer Levy and Yoav Goldberg. ACL 2014.**
 
-An example pipeline is demonstrated in: example_test.sh
+An example pipeline is demonstrated in: *example_test.sh*
 
 
 ##Evaluation##
