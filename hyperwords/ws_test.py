@@ -1,7 +1,7 @@
 from docopt import docopt
 from scipy.stats.stats import spearmanr
 
-from representation_factory import create_representation
+from hyperwords.representations.representation_factory import create_representation
 
 
 def main():

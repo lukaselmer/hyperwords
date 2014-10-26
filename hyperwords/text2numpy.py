@@ -1,7 +1,7 @@
 from docopt import docopt
-
 import numpy as np
-from matrix_serializer import save_vocabulary
+
+from hyperwords.representations.matrix_serializer import save_vocabulary
 
 
 def main():

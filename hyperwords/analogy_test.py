@@ -3,7 +3,7 @@ from __builtin__ import sorted
 from docopt import docopt
 import numpy as np
 
-from representation_factory import create_representation
+from hyperwords.representations.representation_factory import create_representation
 
 
 def main():

@@ -1,5 +1,5 @@
-from embedding import SVDEmbedding, EnsembleEmbedding, Embedding
-from explicit import PositiveExplicit
+from hyperwords.representations.embedding import SVDEmbedding, EnsembleEmbedding, Embedding
+from hyperwords.representations.explicit import PositiveExplicit
 
 
 def create_representation(args):

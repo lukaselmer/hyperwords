@@ -3,7 +3,7 @@ import heapq
 from scipy.sparse import dok_matrix, csr_matrix
 import numpy as np
 
-from matrix_serializer import load_vocabulary, load_matrix
+from hyperwords.representations.matrix_serializer import load_vocabulary, load_matrix
 
 
 class Explicit:
@@ -14,7 +14,7 @@ class Explicit:
     def __init__(self, path, normalize=True):
         self.wi, self.iw = load_vocabulary(path + '.words.vocab')
         self.ci, self.ic = load_vocabulary(path + '.contexts.vocab')
-        self.m = load_matrix(path, len(self.iw), len(self.ic))
+        self.m = load_matrix(path)
         self.m.data = np.log(self.m.data)
         self.normal = normalize
         if normalize:

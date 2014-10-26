@@ -3,16 +3,12 @@ from scipy.sparse import csr_matrix
 
 
 def save_matrix(f, m):
-    np.save(f + '_d', m.data)
-    np.save(f + '_i', m.indices)
-    np.save(f + '_p', m.indptr)
+    np.savez_compressed(f, data=m.data, indices=m.indices, indptr=m.indptr, shape=m.shape)
 
 
-def load_matrix(f, la, lb):
-    data = np.load(f + '_d.npy')
-    indices = np.load(f + '_i.npy')
-    indptr = np.load(f + '_p.npy')
-    return csr_matrix((data, indices, indptr), shape=(la, lb))
+def load_matrix(f):
+    loader = np.load(f)
+    return csr_matrix((loader['data'], loader['indices'], loader['indptr']), shape=loader['shape'])
 
 
 def save_vocabulary(path, vocab):

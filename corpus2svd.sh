@@ -1,7 +1,8 @@
 #!/bin/sh
 
+
 # Parse input params
-PARAM_CHECK=$(python corpus2svd_params.py $@ 2>&1)
+PARAM_CHECK=$(python hyperwords/corpus2svd_params.py $@ 2>&1)
 if [[ $PARAM_CHECK == *Usage:* ]]; then
     echo "$PARAM_CHECK";
     exit 1
@@ -24,28 +25,28 @@ SVD2TEXT_OPTS=${PARAM_CHECK[5]}
 
 
 # Clean the corpus from non alpha-numeric symbols
-./clean_corpus.sh $CORPUS > $CORPUS.clean
+scripts/clean_corpus.sh $CORPUS > $CORPUS.clean
 
 
 # Create collection of word-context pairs
 mkdir $OUTPUT_DIR
-python corpus2pairs.py $CORPUS2PAIRS_OPTS $CORPUS.clean > $OUTPUT_DIR/pairs
-./pairs2counts.sh $OUTPUT_DIR/pairs > $OUTPUT_DIR/counts
-python counts2vocab.py $OUTPUT_DIR/counts
+python hyperwords/corpus2pairs.py $CORPUS2PAIRS_OPTS $CORPUS.clean > $OUTPUT_DIR/pairs
+scripts/pairs2counts.sh $OUTPUT_DIR/pairs > $OUTPUT_DIR/counts
+python hyperwords/counts2vocab.py $OUTPUT_DIR/counts
 
 
 # Calculate PMI matrices for each collection of pairs
-python counts2pmi.py $COUNTS2PMI_OPTS $OUTPUT_DIR/counts $OUTPUT_DIR/pmi
+python hyperwords/counts2pmi.py $COUNTS2PMI_OPTS $OUTPUT_DIR/counts $OUTPUT_DIR/pmi
 
 
 # Create embeddings with SVD
-python pmi2svd.py $PMI2SVD_OPTS $OUTPUT_DIR/pmi $OUTPUT_DIR/svd
+python hyperwords/pmi2svd.py $PMI2SVD_OPTS $OUTPUT_DIR/pmi $OUTPUT_DIR/svd
 cp $OUTPUT_DIR/pmi.words.vocab $OUTPUT_DIR/svd.words.vocab
 cp $OUTPUT_DIR/pmi.contexts.vocab $OUTPUT_DIR/svd.contexts.vocab
 
 
 # Save the embeddings in the textual format 
-python svd2text.py $SVD2TEXT_OPTS $OUTPUT_DIR/svd $OUTPUT_DIR/vectors.txt
+python hyperwords/svd2text.py $SVD2TEXT_OPTS $OUTPUT_DIR/svd $OUTPUT_DIR/vectors.txt
 
 
 # Remove temporary files
