@@ -10,9 +10,9 @@ hyperwords is free and open software. If you use hyperwords in scientific public
 
 ## Requirements ##
 Running hyperwords may require a lot of computational resources:  
-- disk space for independently pre-processing the corpus  
-- internal memory for loading sparse matrices  
-- significant running time; hyperwords is neither optimized nor multi-threaded
+* disk space for independently pre-processing the corpus  
+* internal memory for loading sparse matrices  
+* significant running time; hyperwords is neither optimized nor multi-threaded
 
 hyperwords assumes a *nix shell, and requires Python 2.7 (or later, excluding 3+) with the following packages installed:
 numpy, scipy, sparsesvd.
