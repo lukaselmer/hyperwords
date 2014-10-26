@@ -3,8 +3,8 @@ from sparsesvd import sparsesvd
 from docopt import docopt
 import numpy as np
 
-from hyperwords.representations.explicit import PositiveExplicit
-from matrix_serializer import save_vocabulary
+from representations.explicit import PositiveExplicit
+from representations.matrix_serializer import save_vocabulary
 
 
 def main():

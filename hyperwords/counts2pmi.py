@@ -2,7 +2,7 @@ from docopt import docopt
 from scipy.sparse import dok_matrix, csr_matrix
 import numpy as np
 
-from hyperwords.representations.matrix_serializer import save_matrix, save_vocabulary, load_count_vocabulary
+from representations.matrix_serializer import save_matrix, save_vocabulary, load_count_vocabulary
 
 
 def main():

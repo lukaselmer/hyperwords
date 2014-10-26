@@ -1,6 +1,6 @@
 from docopt import docopt
 
-from hyperwords.representations.embedding import EnsembleEmbedding, SVDEmbedding
+from representations.embedding import EnsembleEmbedding, SVDEmbedding
 
 
 def main():

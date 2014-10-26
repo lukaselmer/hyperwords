@@ -2,7 +2,7 @@ from collections import Counter
 
 from docopt import docopt
 
-from hyperwords.representations.matrix_serializer import save_count_vocabulary
+from representations.matrix_serializer import save_count_vocabulary
 
 
 def main():
