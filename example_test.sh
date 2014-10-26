@@ -45,16 +45,16 @@ cp w5.dyn.sub.oov/pmi.contexts.vocab w5.dyn.sub.oov/svd.contexts.vocab
 
 # Create embeddings with SGNS (A). Commands 2-5 are necessary for loading the vectors with embeddings.py
 word2vecf/word2vecf -train w2.sub/pairs -pow 0.75 -cvocab w2.sub/counts.contexts.vocab -wvocab w2.sub/counts.words.vocab -dumpcv w2.sub/sgns.contexts -output w2.sub/sgns.words -threads 10 -negative 15 -size 500;
-python hyperwords/text2numpy.py w2.sub/sgns.words w2.sub/sgns.words
+python hyperwords/text2numpy.py w2.sub/sgns.words
 rm w2.sub/sgns.words
-python hyperwords/text2numpy.py w2.sub/sgns.contexts w2.sub/sgns.contexts
+python hyperwords/text2numpy.py w2.sub/sgns.contexts
 rm w2.sub/sgns.contexts
 
 # Create embeddings with SGNS (B). Commands 2-5 are necessary for loading the vectors with embeddings.py
 word2vecf/word2vecf -train w5.dyn.sub.oov/pairs -pow 0.75 -cvocab w5.dyn.sub.oov/counts.contexts.vocab -wvocab w5.dyn.sub.oov/counts.words.vocab -dumpcv w5.dyn.sub.oov/sgns.contexts -output w5.dyn.sub.oov/sgns.words -threads 10 -negative 15 -size 500;
-python hyperwords/text2numpy.py w5.dyn.sub.oov/sgns.words w5.dyn.sub.oov/sgns.words
+python hyperwords/text2numpy.py w5.dyn.sub.oov/sgns.words
 rm w5.dyn.sub.oov/sgns.words
-python hyperwords/text2numpy.py w5.dyn.sub.oov/sgns.contexts w5.dyn.sub.oov/sgns.contexts
+python hyperwords/text2numpy.py w5.dyn.sub.oov/sgns.contexts
 rm w5.dyn.sub.oov/sgns.contexts
 
 

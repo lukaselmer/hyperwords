@@ -42,8 +42,8 @@ python hyperwords/counts2vocab.py $OUTPUT_DIR/counts
 
 # Create embeddings with SGNS. Commands 2-5 are necessary for loading the vectors with embeddings.py
 word2vecf/word2vecf $WORD2VECF_OPTS -train $OUTPUT_DIR/pairs -cvocab $OUTPUT_DIR/counts.contexts.vocab -wvocab $OUTPUT_DIR/counts.words.vocab -dumpcv $OUTPUT_DIR/sgns.contexts -output $OUTPUT_DIR/sgns.words
-python hyperwords/text2numpy.py $OUTPUT_DIR/sgns.words $OUTPUT_DIR/sgns.words
-python hyperwords/text2numpy.py $OUTPUT_DIR/sgns.contexts $OUTPUT_DIR/sgns.contexts
+python hyperwords/text2numpy.py $OUTPUT_DIR/sgns.words
+python hyperwords/text2numpy.py $OUTPUT_DIR/sgns.contexts
 
 
 # Save the embeddings in the textual format 

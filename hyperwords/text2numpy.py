@@ -7,13 +7,12 @@ from hyperwords.representations.matrix_serializer import save_vocabulary
 def main():
     args = docopt("""
     Usage:
-        text2numpy.py <text_vectors> <output_path>
+        text2numpy.py <path>
     """)
     
-    text_path = args['<text_vectors>']
-    output_path = args['<output_path>']
+    path = args['<path>']
     
-    matrix = read_vectors(text_path)
+    matrix = read_vectors(path)
     iw = sorted(matrix.keys())
     
     new_matrix = np.zeros(shape=(len(iw), len(matrix[iw[0]])), dtype=np.float32)
@@ -21,8 +20,8 @@ def main():
         if word in matrix:
             new_matrix[i, :] = matrix[word]
     
-    np.save(output_path + '.npy', new_matrix)
-    save_vocabulary(output_path + '.vocab', iw)
+    np.save(path + '.npy', new_matrix)
+    save_vocabulary(path + '.vocab', iw)
 
 
 def read_vectors(path):
