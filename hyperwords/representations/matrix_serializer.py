@@ -7,6 +7,8 @@ def save_matrix(f, m):
 
 
 def load_matrix(f):
+    if not f.endswith('.npz'):
+        f += '.npz'
     loader = np.load(f)
     return csr_matrix((loader['data'], loader['indices'], loader['indptr']), shape=loader['shape'])
 
