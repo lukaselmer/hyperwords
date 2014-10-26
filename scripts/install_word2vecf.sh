@@ -7,6 +7,4 @@ mv yoavgo-word2vecf-90e299816bcd/*.c word2vecf/.
 mv yoavgo-word2vecf-90e299816bcd/*.h word2vecf/.
 mv yoavgo-word2vecf-90e299816bcd/makefile word2vecf/.
 rm -r yoavgo-word2vecf-90e299816bcd
-cd word2vecf
-make
-cd ..
+make -C word2vecf
