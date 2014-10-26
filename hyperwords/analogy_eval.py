@@ -9,7 +9,7 @@ from hyperwords.representations.representation_factory import create_representat
 def main():
     args = docopt("""
     Usage:
-        analogy_test.py [options] <representation> <representation_path> <task_path>
+        analogy_eval.py [options] <representation> <representation_path> <task_path>
     
     Options:
         --neg NUM    Number of negative samples; subtracts its log from PMI (only applicable to PPMI) [default: 1]
