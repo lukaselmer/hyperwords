@@ -16,7 +16,7 @@ def main():
         --pos        Positional contexts
         --dyn        Dynamic context windows
         --sub NUM    Subsampling threshold [default: 0]
-        --oov        Remove out-of-vocabulary and subsampled placeholders
+        --del        Delete out-of-vocabulary and subsampled placeholders
     """)
     
     corpus_file = args['<corpus>']
@@ -26,7 +26,7 @@ def main():
     dyn = args['--dyn']
     subsample = float(args['--sub'])
     sub = subsample != 0
-    oov = args['--oov']
+    d3l = args['--del']
     
     vocab = read_vocab(corpus_file, thr)
     corpus_size = sum(vocab.values())
@@ -41,7 +41,7 @@ def main():
             tokens = [t if t in vocab else None for t in line.strip().split()]
             if sub:
                 tokens = [t if t not in subsampler or rnd.random() > subsampler[t] else None for t in tokens]
-            if oov:
+            if d3l:
                 tokens = [t for t in tokens if t is not None]
             
             len_tokens = len(tokens)

@@ -13,7 +13,7 @@ def main():
         --pos        Positional contexts
         --dyn        Dynamic context windows
         --sub NUM    Subsampling threshold [default: 0]
-        --oov        Remove out-of-vocabulary and subsampled placeholders
+        --del        Delete out-of-vocabulary and subsampled placeholders
         --cds NUM    Context distribution smoothing [default: 1.0]
         --dim NUM    Dimensionality of eigenvectors [default: 500]
         --neg NUM    Number of negative samples; subtracts its log from PMI [default: 1]
@@ -32,8 +32,8 @@ def main():
     if args['--dyn']:
         corpus2pairs_opts.append('--dyn')
     corpus2pairs_opts.append('--sub ' + args['--sub'])
-    if args['--oov']:
-        corpus2pairs_opts.append('--oov')
+    if args['--del']:
+        corpus2pairs_opts.append('--del')
 
     counts2pmi_opts = []
     counts2pmi_opts.append('--cds ' + args['--cds'])
