@@ -54,6 +54,7 @@ def read_counts_matrix(counts_path):
                 counts = counts + tmp_counts.tocsr()
                 tmp_counts = dok_matrix((len(wi), len(ci)), dtype=np.float32)
                 i = 0
+    counts = counts + tmp_counts.tocsr()
     
     return counts, iw, ic
 
