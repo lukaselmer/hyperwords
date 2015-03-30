@@ -5,7 +5,8 @@ research and prototyping of word representations. It allows you to tune many hyp
 ignored in other word representation packages.
 
 hyperwords is free and open software. If you use hyperwords in scientific publication, we would appreciate citations:  
-**"<NAME>" Omer Levy, Yoav Goldberg, and Ido Dagan. <JOURNAL> 2014/5.**
+"Improving Distributional Similarity with Lessons Learned from Word Embeddings"
+Omer Levy, Yoav Goldberg, and Ido Dagan. TACL 2015.
 
 
 ## Requirements ##
